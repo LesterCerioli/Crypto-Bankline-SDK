@@ -3,18 +3,19 @@ import json
 from datetime import datetime
 from typing import List, Dict, Any
 from .block import Block
+from .transaction_validator import TransactionValidator, FraudDetectionService
 
 
 class Blockchain:
     def __init__(self):
         self.chain: List[Block] = []
         self.difficulty = 2  # Difficulty for proof-of-work
+        self.transaction_validator = TransactionValidator()
+        self.fraud_detection = FraudDetectionService()
         self.create_genesis_block()
 
     def create_genesis_block(self) -> None:
-        """
-        Create the Genesis Block - the first block in the blockchain
-        """
+        
         genesis_data = {
             "message": "Genesis Block - Initial block of the blockchain",
             "creator": "System",
@@ -27,22 +28,23 @@ class Blockchain:
             data=genesis_data,
             previous_hash="0" * 64  # Standard initial hash
         )
-                
+        
+        
         genesis_block.mine_block(self.difficulty)
         
         self.chain.append(genesis_block)
-        print("✅ Genesis Block created successfully!")
+        print("Genesis Block created successfully!")
 
     def get_latest_block(self) -> Block:
-        """
-        Returns the last block in the chain
-        """
+        
         return self.chain[-1]
 
     def add_block(self, data: Dict[str, Any]) -> Block:
-        """
-        Adds a new block to the blockchain
-        """
+        
+        
+        if not self._validate_block_data(data):
+            raise ValueError("Block contains invalid or fraudulent transactions")
+        
         previous_block = self.get_latest_block()
         
         new_block = Block(
@@ -58,30 +60,52 @@ class Blockchain:
         print(f"✅ New block #{new_block.index} added to the blockchain!")
         return new_block
 
+    def _validate_block_data(self, data: Dict[str, Any]) -> bool:
+        
+        print("\n🔐 Starting transaction validation...")
+        
+        
+        if not data:
+            print("Block data is empty")
+            return False
+                
+        if 'transactions' in data:
+            if not self.transaction_validator.validate_block_transactions(data):
+                print("Block rejected due to invalid transactions")
+                return False
+            
+            
+            for transaction in data['transactions']:
+                fraud_analysis = self.fraud_detection.analyze_transaction_pattern(transaction)
+                if fraud_analysis['is_suspicious']:
+                    print(f"🚨 Fraud detection alert for transaction:")
+                    print(f"   Reasons: {', '.join(fraud_analysis['reasons'])}")
+                    print(f"   Confidence: {fraud_analysis['confidence']:.2f}")
+                    return False
+        
+        print("All transactions validated successfully!")
+        return True
+
     def is_chain_valid(self) -> bool:
-        """
-        Verifies if the blockchain is valid
-        """
+        
         for i in range(1, len(self.chain)):
             current_block = self.chain[i]
             previous_block = self.chain[i - 1]
             
             if current_block.hash != current_block.calculate_hash():
-                print(f"❌ Invalid hash in block {current_block.index}")
+                print(f"Invalid hash in block {current_block.index}")
                 return False
 
-            # Verify if the previous_hash points to the previous block
+            
             if current_block.previous_hash != previous_block.hash:
                 print(f"❌ Invalid previous hash in block {current_block.index}")
                 return False
 
-        print("✅ Blockchain is valid!")
+        print("Blockchain is valid!")
         return True
 
     def display_chain(self) -> None:
-        """
-        Displays the entire blockchain
-        """
+        
         print("\n" + "="*80)
         print("COMPLETE BLOCKCHAIN")
         print("="*80)
@@ -96,21 +120,20 @@ class Blockchain:
             print("-" * 50)
 
     def to_dict_list(self) -> List[Dict[str, Any]]:
-        """
-        Converts the blockchain to a list of dictionaries
-        """
+        
         return [block.to_dict() for block in self.chain]
 
     def get_block_by_index(self, index: int) -> Block:
-        """
-        Returns a block by its index
-        """
+        
         if 0 <= index < len(self.chain):
             return self.chain[index]
         raise IndexError("Block index out of range")
 
     def get_chain_length(self) -> int:
-        """
-        Returns the length of the chain
-        """
+        
         return len(self.chain)
+    
+    def report_fraudulent_address(self, address: str) -> None:
+        
+        self.transaction_validator.add_fraudulent_address(address)
+        print(f"🚨 Reported fraudulent address: {address}")
