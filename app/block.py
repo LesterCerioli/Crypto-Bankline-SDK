@@ -10,8 +10,8 @@ class Block:
         self.timestamp = timestamp
         self.data = data
         self.previous_hash = previous_hash
-        self.hash = self.calculate_hash()
-        self.nonce = 0  # For proof-of-work
+        self.nonce = 0  # This line must come BEFORE calculate_hash()
+        self.hash = self.calculate_hash()  # This line must come AFTER nonce
 
     def calculate_hash(self) -> str:
         """
