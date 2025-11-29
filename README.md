@@ -41,7 +41,7 @@ docker run -it --rm -v $(pwd)/data:/app/data python-blockchain
 ### 1. Build Docker image:
 ```bash
 docker build -t python-blockchain .
-
+----------------------------------------------------------
 
 
 
