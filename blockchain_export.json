@@ -1,0 +1,72 @@
+[
+  {
+    "index": 0,
+    "timestamp": "2025-11-29T07:25:50.182584",
+    "data": {
+      "message": "Genesis Block - Initial block of the blockchain",
+      "creator": "System",
+      "version": "1.0"
+    },
+    "previous_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+    "hash": "00f33f4b2c23af20211562c437782d64e1d921b02ca1c8cfe81602d10307420b",
+    "nonce": 144
+  },
+  {
+    "index": 1,
+    "timestamp": "2025-11-29T07:25:50.183768",
+    "data": {
+      "transactions": [
+        {
+          "from": "Alice",
+          "to": "Bob",
+          "amount": 50.0,
+          "currency": "BTC"
+        },
+        {
+          "from": "Carlos",
+          "to": "Diana",
+          "amount": 25.5,
+          "currency": "BTC"
+        }
+      ],
+      "fee": 0.001,
+      "memo": "First transactions"
+    },
+    "previous_hash": "00f33f4b2c23af20211562c437782d64e1d921b02ca1c8cfe81602d10307420b",
+    "hash": "004879144a25af3a4a3dbf6ed546177cba6296f608a52fa81093ac4701374f2b",
+    "nonce": 11
+  },
+  {
+    "index": 2,
+    "timestamp": "2025-11-29T07:25:51.184075",
+    "data": {
+      "transactions": [
+        {
+          "from": "Bob",
+          "to": "Eva",
+          "amount": 10.0,
+          "currency": "BTC"
+        }
+      ],
+      "fee": 0.0005,
+      "memo": "Simple transfer"
+    },
+    "previous_hash": "004879144a25af3a4a3dbf6ed546177cba6296f608a52fa81093ac4701374f2b",
+    "hash": "0052b5eab60471eb49d023b94f7cc85de63e4df6710d90627e01d912a51fbb1f",
+    "nonce": 110
+  },
+  {
+    "index": 3,
+    "timestamp": "2025-11-29T07:25:52.185307",
+    "data": {
+      "type": "smart_contract",
+      "contract": "ERC-20 Token",
+      "action": "mint",
+      "quantity": 1000,
+      "recipient": "0x742d35Cc6634C0532925a3b8D"
+    },
+    "previous_hash": "0052b5eab60471eb49d023b94f7cc85de63e4df6710d90627e01d912a51fbb1f",
+    "hash": "004606fd29a4f8d1de01d929293db0cfde52048fe8088d49ee693ecd80386f95",
+    "nonce": 8
+  }
+]
