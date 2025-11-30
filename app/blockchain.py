@@ -9,7 +9,7 @@ from .transaction_validator import TransactionValidator, FraudDetectionService
 class Blockchain:
     def __init__(self):
         self.chain: List[Block] = []
-        self.difficulty = 2  # Difficulty for proof-of-work
+        self.difficulty = 2  
         self.transaction_validator = TransactionValidator()
         self.fraud_detection = FraudDetectionService()
         self.create_genesis_block()
@@ -26,7 +26,7 @@ class Blockchain:
             index=0,
             timestamp=datetime.now(),
             data=genesis_data,
-            previous_hash="0" * 64  # Standard initial hash
+            previous_hash="0" * 64  
         )
         
         

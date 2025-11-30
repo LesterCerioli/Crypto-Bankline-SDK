@@ -10,8 +10,8 @@ class Block:
         self.timestamp = timestamp
         self.data = data
         self.previous_hash = previous_hash
-        self.nonce = 0  # This line must come BEFORE calculate_hash()
-        self.hash = self.calculate_hash()  # This line must come AFTER nonce
+        self.nonce = 0  
+        self.hash = self.calculate_hash()  
 
     def calculate_hash(self) -> str:
         """
@@ -28,9 +28,7 @@ class Block:
         return hashlib.sha256(block_string.encode()).hexdigest()
 
     def mine_block(self, difficulty: int = 2) -> None:
-        """
-        Implement proof-of-work (mining)
-        """
+        
         target = "0" * difficulty
         while self.hash[:difficulty] != target:
             self.nonce += 1
@@ -39,9 +37,7 @@ class Block:
         print(f"Mined block: {self.hash}")
 
     def to_dict(self) -> Dict[str, Any]:
-        """
-        Convert block to dictionary
-        """
+        
         return {
             "index": self.index,
             "timestamp": self.timestamp.isoformat(),

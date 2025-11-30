@@ -75,21 +75,17 @@ def get_transaction_data():
 
 
 class BackgroundBlockchainServer:
-    """
-    Simulates a FastAPI-like server running in background
-    that processes incoming transactions automatically
-    """
-    
+        
     def __init__(self, blockchain):
         self.blockchain = blockchain
         self.is_running = False
         self.server_thread = None
         self.transaction_queue = []
-        self.processing_interval = 10  # Process every 10 seconds
+        self.processing_interval = 10  
         self.last_processed = datetime.now()
         
     def start_server(self):
-        """Start the background server"""
+        
         if self.is_running:
             print("⚠️  Server is already running!")
             return
@@ -103,14 +99,14 @@ class BackgroundBlockchainServer:
         print("   🛑 Use option 7 to stop the server")
         
     def stop_server(self):
-        """Stop the background server"""
+        
         self.is_running = False
         if self.server_thread:
             self.server_thread.join(timeout=2)
         print("🛑 Background server stopped")
         
     def _server_loop(self):
-        """Main server loop that runs in background"""
+        
         print(f"🕒 Server started at {datetime.now().strftime('%H:%M:%S')}")
         
         while self.is_running:
@@ -133,7 +129,7 @@ class BackgroundBlockchainServer:
                 time.sleep(5)
     
     def _simulate_incoming_transaction(self):
-        """Simulate random incoming transactions"""
+        
         users = ["Alice", "Bob", "Charlie", "Diana", "Eva", "Frank", "Grace", "Henry"]
         currencies = ["BTC", "ETH", "USD"]
         
@@ -154,7 +150,7 @@ class BackgroundBlockchainServer:
         print(f"📨 Incoming transaction: {transaction['from']} -> {transaction['to']} {transaction['amount']} {transaction['currency']}")
     
     def _process_transaction_queue(self):
-        """Process all transactions in the queue"""
+        
         if not self.transaction_queue:
             return
             
@@ -190,7 +186,7 @@ class BackgroundBlockchainServer:
         print(f"📊 Server Status: {len(self.transaction_queue)} pending transactions")
     
     def get_server_status(self):
-        """Get current server status"""
+        
         return {
             "is_running": self.is_running,
             "queue_size": len(self.transaction_queue),
