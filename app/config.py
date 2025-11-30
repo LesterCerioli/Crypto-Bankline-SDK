@@ -6,7 +6,7 @@ load_dotenv()
 
 class GasServiceConfig:
             
-    INFURA_GAS_API_BASE_URL = os.getcwdgetenv('INFURA_GAS_API_BASE_URL')
+    INFURA_GAS_API_BASE_URL = os.getenv('INFURA_GAS_API_BASE_URL')
     INFURA_PROJECT_ID = os.getenv('INFURA_PROJECT_ID')
     INFURA_PROJECT_SECRET = os.getenv('INFURA_PROJECT_SECRET')
         
